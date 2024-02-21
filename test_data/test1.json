@@ -1,0 +1,123 @@
+{
+    "OverSellQty": 212500.0,
+    "UnderBuyQty": 492500.0,
+    "TotalMarketValue": 36342556686.0,
+    "MarketOrderSellQty": 0.0,
+    "MarketOrderBuyQty": 0.0,
+    "BidTime": "2024-01-26T11:04:41+09:00",
+    "AskTime": "2024-01-26T11:04:41+09:00",
+    "Exchange": 1,
+    "ExchangeName": "東証グ",
+    "TradingVolume": 2093400.0,
+    "TradingVolumeTime": "2024-01-26T11:04:40+09:00",
+    "VWAP": 553.1947,
+    "TradingValue": 1158057800.0,
+    "BidQty": 1700.0,
+    "BidPrice": 543.0,
+    "BidSign": "0101",
+    "Sell1": {
+        "Price": 543.0,
+        "Qty": 1700.0,
+        "Sign": "0101",
+        "Time": "2024-01-26T11:04:41+09:00"
+    },
+    "Sell2": {
+        "Price": 544.0,
+        "Qty": 5000.0
+    },
+    "Sell3": {
+        "Price": 545.0,
+        "Qty": 8300.0
+    },
+    "Sell4": {
+        "Price": 546.0,
+        "Qty": 3800.0
+    },
+    "Sell5": {
+        "Price": 547.0,
+        "Qty": 3200.0
+    },
+    "Sell6": {
+        "Price": 548.0,
+        "Qty": 6600.0
+    },
+    "Sell7": {
+        "Price": 549.0,
+        "Qty": 4600.0
+    },
+    "Sell8": {
+        "Price": 550.0,
+        "Qty": 5100.0
+    },
+    "Sell9": {
+        "Price": 551.0,
+        "Qty": 2600.0
+    },
+    "Sell10": {
+        "Price": 552.0,
+        "Qty": 800.0
+    },
+    "AskQty": 1700.0,
+    "AskPrice": 542.0,
+    "AskSign": "0101",
+    "Buy1": {
+        "Price": 542.0,
+        "Qty": 1700.0,
+        "Sign": "0101",
+        "Time": "2024-01-26T11:04:41+09:00"
+    },
+    "Buy2": {
+        "Price": 541.0,
+        "Qty": 4000.0
+    },
+    "Buy3": {
+        "Price": 540.0,
+        "Qty": 2200.0
+    },
+    "Buy4": {
+        "Price": 539.0,
+        "Qty": 4100.0
+    },
+    "Buy5": {
+        "Price": 538.0,
+        "Qty": 5400.0
+    },
+    "Buy6": {
+        "Price": 537.0,
+        "Qty": 4900.0
+    },
+    "Buy7": {
+        "Price": 536.0,
+        "Qty": 7700.0
+    },
+    "Buy8": {
+        "Price": 535.0,
+        "Qty": 10200.0
+    },
+    "Buy9": {
+        "Price": 534.0,
+        "Qty": 5800.0
+    },
+    "Buy10": {
+        "Price": 533.0,
+        "Qty": 7600.0
+    },
+    "Symbol": "4592",
+    "SymbolName": "サンバイオ",
+    "CurrentPrice": 544.0,
+    "CurrentPriceTime": "2024-01-26T11:04:40+09:00",
+    "CurrentPriceChangeStatus": "0056",
+    "CurrentPriceStatus": 1,
+    "CalcPrice": 543.0,
+    "PreviousClose": 521.00000,
+    "PreviousCloseTime": "2024-01-25T00:00:00+09:00",
+    "ChangePreviousClose": 22.00000,
+    "ChangePreviousClosePer": 4.22,
+    "OpeningPrice": 561.0,
+    "OpeningPriceTime": "2024-01-26T09:09:00+09:00",
+    "HighPrice": 569.0,
+    "HighPriceTime": "2024-01-26T09:55:54+09:00",
+    "LowPrice": 535.0,
+    "LowPriceTime": "2024-01-26T10:53:11+09:00",
+    "SecurityType": 1
+}
