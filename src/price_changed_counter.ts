@@ -20,13 +20,13 @@ export class PriceChangedCounter {
     add(data: JsonParseMain): void {
         const code = data.getCode();
         const new_current_price: number = data.getCurrentPrice();
-        const old_counter_obj = this.map_of_counter_each_code.get(code);
+        const old_counter_map = this.map_of_counter_each_code.get(code);
 
-        if (old_counter_obj && old_counter_obj.current_price === new_current_price) {
+        if (old_counter_map && old_counter_map.current_price === new_current_price) {
             return;
         }
 
-        const new_count = (old_counter_obj ? old_counter_obj.counter : 0) + 1;
+        const new_count = (old_counter_map ? old_counter_map.counter : 0) + 1;
 
         this.map_of_counter_each_code.set(code,
             {

@@ -13,7 +13,7 @@ export default async function db_search_buying_data(code: string): Promise<trade
                 //console.log('success search');
             }
             if (rows.length !== 1) {
-                console.error(`(code=${code})Error search table is not 1`);
+                //console.error(`(code=${code})Error search table is not 1`);
                 resolve(undefined);
             } else {
                 resolve(rows[0]);

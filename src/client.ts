@@ -22,7 +22,7 @@ if (process.argv[2] == '--test') {
 }
 
 const counter = new PriceChangedCounter();
-const inago_rader = new InagoRader(10, 10);
+const inago_rader = new InagoRader(3, 1);//秒、数
 
 
 ws.on('open', () => {
@@ -36,10 +36,6 @@ ws.on('message', (message: string) => {
   const code = json_obj.getCode()
   counter.add(json_obj);
   inago_rader.addData(code, counter);
-  const inago = inago_rader.is_inago(code);
-  if (inago) {
-    console.log('inago on ' + code)
-  }
   const message_analysis = new MessageAnalysis(json_obj);
   message_analysis.start();
 });

@@ -7,7 +7,7 @@ export default async function db_sell_kabu(code: string, price: number) {
     const buying_data: trade_table | undefined = await db_search_buying_data(code);
 
     if (buying_data === undefined) {
-        console.error('Error no buing data');
+        //console.error('Error no buing data');
         return false;
     }
 

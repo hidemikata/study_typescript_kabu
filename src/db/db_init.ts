@@ -10,6 +10,11 @@ export interface trade_table {
     profit_loss: number
 }
 
+export interface inago_table {
+    id: number,
+    stock_code: string,
+}
+
 export default function db_initialize() {
     global.db = new sqlite3.Database('./db/order.db', (err) => {
         if (err) {
@@ -27,6 +32,27 @@ export default function db_initialize() {
         sell_price REAL,
         sell_time TEXT,
         profit_loss REAL
+      )`, (err) => {
+        if (err) {
+            console.error('Error creating table', err);
+        } else {
+            console.log('Table created or already exists');
+        }
+    });
+
+    //inago
+    /*
+    global.db = new sqlite3.Database('./db/inago.db', (err) => {
+        if (err) {
+            console.error('Error opening database.(inago)', err);
+        } else {
+            console.log('Successfully opened/created the database.(inago)');
+        }
+    });
+*/
+    global.db.run(`CREATE TABLE inago (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        stock_code TEXT NOT NULL
       )`, (err) => {
         if (err) {
             console.error('Error creating table', err);

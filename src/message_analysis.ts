@@ -4,6 +4,7 @@ import { AlgoPrice } from "./algo_price.js";
 import { AlgoBase } from "./algo_base.js";
 import db_buy_kabu from "./db/db_buy_kabu.js";
 import db_sell_kabu from "./db/db_sell_kabu.js";
+import { InagoRader } from "./inago_rader.js";
 
 export class MessageAnalysis {
     public json: JsonParseMain;
@@ -18,6 +19,14 @@ export class MessageAnalysis {
         const current_price = this.json.getCurrentPrice();
         console.log(current_price);
 
+        const inago = InagoRader.is_inago(this.json.getCode());
+
+        if (!inago) {
+            console.log('not inago. nothing to do.');
+            return;
+        }
+
+
         for (const algo of this.algos) {
             const ret = algo.go_algo();
             if (ret) {
@@ -25,7 +34,7 @@ export class MessageAnalysis {
             }
         }
 
-        売りと買いのロジックを検討する。
+        //売りと買いのロジックを検討する。
         for (const algo of this.algos) {
             const ret = algo.go_algo();
             if (ret) {
