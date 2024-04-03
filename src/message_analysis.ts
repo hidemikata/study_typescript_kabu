@@ -15,17 +15,16 @@ export class MessageAnalysis {
         this.algos = [new AlgoPrice(json)];
     }
 
-    public start() {
+    public async start() {
         const current_price = this.json.getCurrentPrice();
-        console.log(current_price);
+        //console.log(current_price);
 
-        const inago = InagoRader.is_inago(this.json.getCode());
+        const inago = await InagoRader.is_inago(this.json.getCode());
 
         if (!inago) {
             console.log('not inago. nothing to do.');
             return;
         }
-
 
         for (const algo of this.algos) {
             const ret = algo.go_algo();

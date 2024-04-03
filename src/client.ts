@@ -22,7 +22,7 @@ if (process.argv[2] == '--test') {
 }
 
 const counter = new PriceChangedCounter();
-const inago_rader = new InagoRader(3, 1);//秒、数
+const inago_rader = new InagoRader(10, 1);//秒、数
 
 
 ws.on('open', () => {

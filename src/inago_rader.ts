@@ -36,11 +36,11 @@ export class InagoRader {
             inago = [newEntry];
         } else {
             // inagoが2つのエントリを持ち、最新のエントリが一定期間より古い場合、最古のエントリを削除
-            if (inago.length === 2 && inago[0].time + this.inago_duration < currentTime) {
+            if (inago.length === 2 && inago[1].time + this.inago_duration < currentTime) {
                 inago.shift();
             }
             // 配列が満杯でない、または最新のエントリが更新基準を満たす場合は新規エントリを追加
-            if (inago.length < 2 || inago[inago.length - 1].time + this.inago_duration < currentTime) {
+            if (inago.length === 1 && inago[0].time + this.inago_duration < currentTime) {
                 inago.push(newEntry);
             }
         }
@@ -54,19 +54,24 @@ export class InagoRader {
             this.map_of_inago_each_code.forEach((value, key) => {
                 this.check(parseInt(key));
             });
-        }, 1000);
+        }, 2000);
     }
 
-    public static is_inago(code: string) {
-        return db_is_inago(code)
+    public static async is_inago(code: string) {
+        return await db_is_inago(code);
     }
 
     private check(code: number) {
 
         let inago = this.map_of_inago_each_code.get(code.toString())
 
-        //２個ない
-        if (inago === undefined || inago.length != 2) {
+        //回数不足
+        if (inago === undefined) {
+            db_inago_delete(code.toString());
+            console.log('---inago delete(0):', code);
+            return;
+        }
+        if (inago.length != 2) {
             db_inago_delete(code.toString());
             console.log('---inago delete(1):', code);
             return;
