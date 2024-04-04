@@ -20,9 +20,8 @@ export class MessageAnalysis {
         //console.log(current_price);
 
         const inago = await InagoRader.is_inago(this.json.getCode());
-
         if (!inago) {
-            console.log('not inago. nothing to do.');
+            //console.log('not inago. nothing to do.');
             return;
         }
 

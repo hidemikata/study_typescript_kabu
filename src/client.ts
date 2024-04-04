@@ -34,10 +34,13 @@ ws.on('message', (message: string) => {
   //  console.log(`Received message from server: ${ message }`);
   const json_obj = new JsonParseMain(message)
   const code = json_obj.getCode()
-  counter.add(json_obj);
+  const is_price_changed = counter.add(json_obj);
   inago_rader.addData(code, counter);
-  const message_analysis = new MessageAnalysis(json_obj);
-  message_analysis.start();
+  if (is_price_changed) {
+    //値段がか変わったら発注しに行く。
+    const message_analysis = new MessageAnalysis(json_obj);
+    message_analysis.start();
+  }
 });
 
 ws.on('close', () => {

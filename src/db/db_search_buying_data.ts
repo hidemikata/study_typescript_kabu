@@ -1,6 +1,6 @@
 import { trade_table } from './db_init.js';
 
-export default async function db_search_buying_data(code: string): Promise<trade_table | undefined> {
+export default async function db_search_buying_data(code: string): Promise<trade_table[] | undefined> {
 
     return new Promise((resolve, reject) => {
 
@@ -8,16 +8,12 @@ export default async function db_search_buying_data(code: string): Promise<trade
 
             if (err) {
                 console.error('Error search table', err);
-                reject(err)
+                reject(undefined)
             } else {
                 //console.log('success search');
             }
-            if (rows.length !== 1) {
-                //console.error(`(code=${code})Error search table is not 1`);
-                resolve(undefined);
-            } else {
-                resolve(rows[0]);
-            }
+            resolve(rows);
+
         });
     });
 }
