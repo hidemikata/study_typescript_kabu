@@ -2,13 +2,18 @@ import { AlgoBase } from "./algo_base.js";
 
 export class AlgoOrderNums extends AlgoBase {
 
-    private count_order(): number {
-
-        return 1;
+    private is_order_over(): boolean {
+        if (this.json.getBuyQtyKeta < this.json.getSellQtyKeta) {
+            return true;
+        }
+        return false;
     }
 
     public go_algo(): boolean {
-        this.count_order();
-        return true;
+        if (this.is_order_over()) {
+            console.log('keta is over');
+            return true;
+        }
+        return false;
     }
 }
