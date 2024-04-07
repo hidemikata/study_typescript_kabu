@@ -27,6 +27,7 @@ export default function db_initialize() {
     global.db.run(`CREATE TABLE trades (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         stock_code TEXT NOT NULL,
+        interval_id TEXT NOT NULL,
         buy_price REAL NOT NULL,
         buy_time TEXT NOT NULL,
         sell_price REAL,

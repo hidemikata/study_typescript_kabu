@@ -1,11 +1,8 @@
 export class JsonParseMain {
-    public recieved_json: string;
     public parsed_json;
 
-    constructor(json: string) {
-        this.recieved_json = json;
-        this.parsed_json = JSON.parse(this.recieved_json);
-
+    constructor(json: string | object) {
+        this.parsed_json = typeof json === 'string' ? JSON.parse(json) : json
     }
 
     getCurrentPrice() {

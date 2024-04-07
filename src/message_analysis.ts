@@ -5,20 +5,22 @@ import { AlgoOrderNums } from "./algo_order_nums.js";
 import { AlgoBase } from "./algo_base.js";
 import db_buy_kabu from "./db/db_buy_kabu.js";
 import db_sell_kabu from "./db/db_sell_kabu.js";
-import { InagoRader } from "./inago_rader.js";
 import db_search_buying_data from './db/db_search_buying_data.js';
 import { trade_table } from './db/db_init.js';
+import { OrderWacher } from './order_watcher.js';
 
 
 export class MessageAnalysis {
     public json: JsonParseMain;
     private buy_algos: AlgoBase[];
     private sell_algos: AlgoBase[];
+    private order_watcher: OrderWacher;
 
     constructor(json: JsonParseMain) {
         this.json = json;
         this.buy_algos = [new AlgoPrice(json)];
         this.buy_algos.push(new AlgoOrderNums(json));
+        this.order_watcher = new OrderWacher();
 
         this.sell_algos = [];
 
@@ -26,30 +28,23 @@ export class MessageAnalysis {
 
     public async start() {
         const current_price = this.json.getCurrentPrice();
-        //console.log(current_price);
 
         const buying_data: trade_table[] | undefined = await db_search_buying_data(this.json.getCode());
+
         if (buying_data === undefined) {
             console.error('faild get buying data.');
             return false;
         }
 
         if (buying_data.length === 0) {
-            //console.error('Error alrady exist buying data');
             this.buy();
         } else {
-            this.sell();
+            //this.sell();//debug
         }
 
     }
 
     private async buy() {
-
-        const inago = await InagoRader.is_inago(this.json.getCode());
-        if (!inago) {
-            //console.log('not inago. nothing to do.');
-            return;
-        }
 
         let buy_jadge: number | undefined;
         for (const algo of this.buy_algos) {
@@ -58,8 +53,9 @@ export class MessageAnalysis {
         }
 
         if (buy_jadge === 1) {
-            db_buy_kabu(this.json.getCode(), this.json.BidPrice());
-            return;//買ったら一度逃がす。
+            const interval_id = this.order_watcher.registOrderWatcherForFix(this.json.getCode());
+            db_buy_kabu(this.json.getCode(), this.json.BidPrice(), interval_id);
+            return;
         }
     }
 
@@ -67,7 +63,7 @@ export class MessageAnalysis {
 
         let sell_jadge: number | undefined;
         for (const algo of this.sell_algos) {
-            const ret = algo.go_algo();
+            const ret = !!algo.go_algo();//booleanに変換
             sell_jadge = (sell_jadge === undefined) ? ret ? 1 : 0 : sell_jadge & (ret ? 1 : 0);
         }
 
@@ -75,7 +71,6 @@ export class MessageAnalysis {
 
         if (sell_jadge === 1) {
             db_sell_kabu(this.json.getCode(), this.json.AskPrice());
-            return;
         }
     }
 }

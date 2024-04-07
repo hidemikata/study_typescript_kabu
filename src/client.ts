@@ -5,9 +5,15 @@ import { TestCallback } from "./test_callback.js";
 import { PriceChangedCounter } from "./price_changed_counter.js";
 import { InagoRader } from "./inago_rader.js";
 import db_initialize from './db/db_init.js';
+import { GetToken } from "./get_token.js";
 
 //実行方法
 //npx tsc -p .\tsconfig.json; node .\dist\client.js
+
+let token = '';
+token
+const gt = new GetToken;
+gt.getToken();
 
 let map_of_message_each_code = new Map<string, JsonParseMain>();
 

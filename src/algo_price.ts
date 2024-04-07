@@ -7,7 +7,7 @@ export class AlgoPrice extends AlgoBase {
         return true;
     }
 
-    public go_algo(): boolean {
+    public go_algo() {
         this.analysis_buy_board();
         return true;
     }
