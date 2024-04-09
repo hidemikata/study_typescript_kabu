@@ -10,8 +10,7 @@ export async function getBoard(code: number) {
                 'X-API-KEY': GetToken.token,
             }
         });
-        console.log(response.data);
-        return new JsonParseMain(response.data);//errorがでる。debug
+        return new JsonParseMain(response.data, false);//errorがでる。debug
 
     } catch (error) {
         console.error(error);

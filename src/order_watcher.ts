@@ -15,10 +15,10 @@ export class OrderWacher {
                 return;
             }
             const sell_price = data.AskPrice();
-
+            console.log('time expire sell kabu:', code.toString());
             do_sell_kabu(code.toString(), sell_price)
 
-        }, 6000);
+        }, 60000);
         const tiemrId = this.generateUniqueString(8);
         console.log('timer = ', tiemrId);
 

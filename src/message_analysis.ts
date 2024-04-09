@@ -8,6 +8,7 @@ import db_sell_kabu from "./db/db_sell_kabu.js";
 import db_search_buying_data from './db/db_search_buying_data.js';
 import { trade_table } from './db/db_init.js';
 import { OrderWacher } from './order_watcher.js';
+import { AlgoSellSimpleMoving } from "./algo_sell_simpleMoving.js";
 
 
 export class MessageAnalysis {
@@ -22,7 +23,7 @@ export class MessageAnalysis {
         this.buy_algos.push(new AlgoOrderNums(json));
         this.order_watcher = new OrderWacher();
 
-        this.sell_algos = [];
+        this.sell_algos = [new AlgoSellSimpleMoving(json)];
 
     }
 
@@ -39,7 +40,7 @@ export class MessageAnalysis {
         if (buying_data.length === 0) {
             this.buy();
         } else {
-            //this.sell();//debug
+            this.sell();
         }
 
     }
@@ -54,6 +55,7 @@ export class MessageAnalysis {
 
         if (buy_jadge === 1) {
             const interval_id = this.order_watcher.registOrderWatcherForFix(this.json.getCode());
+            console.log('BUY!!!')
             db_buy_kabu(this.json.getCode(), this.json.BidPrice(), interval_id);
             return;
         }
@@ -67,9 +69,8 @@ export class MessageAnalysis {
             sell_jadge = (sell_jadge === undefined) ? ret ? 1 : 0 : sell_jadge & (ret ? 1 : 0);
         }
 
-        sell_jadge = 1;//debug必ず売りに行く。
-
         if (sell_jadge === 1) {
+            console.log('SELL!!!')
             db_sell_kabu(this.json.getCode(), this.json.AskPrice());
         }
     }

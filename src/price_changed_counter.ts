@@ -25,7 +25,7 @@ export class PriceChangedCounter {
         if (old_counter_map && old_counter_map.current_price === new_current_price) {
             return false;
         } else {
-            console.log(new_current_price);
+            //console.log(new_current_price);
         }
 
         const new_count = (old_counter_map ? old_counter_map.counter : 0) + 1;

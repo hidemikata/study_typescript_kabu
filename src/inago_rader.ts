@@ -68,30 +68,30 @@ export class InagoRader {
         //回数不足
         if (inago === undefined) {
             db_inago_delete(code.toString());
-            console.log('---inago delete(0):', code);
+            //console.log('---inago delete(0):', code);
             return;
         }
         if (inago.length != 2) {
             db_inago_delete(code.toString());
-            console.log('---inago delete(1):', code);
+            //console.log('---inago delete(1):', code);
             return;
         }
 
         //時間超過
         const currentTime: number = Math.floor(new Date().getTime() / 1000); // 現在時刻を秒単位で取得
         if (inago[1].time <= currentTime - 60) {
-            console.log('---inago delete(3):', code);
+            //console.log('---inago delete(3):', code);
             db_inago_delete(code.toString());
             return;
         }
 
         if (inago[1].count - inago[0].count >= this.inago_judgement_num) {
-            console.log('---inago insert:', code);
+            //console.log('---inago insert:', code);
             db_inago_insert(code.toString());
             return;
         }
         //回数不足
-        console.log('---inago delete(2):', code);
+        //console.log('---inago delete(2):', code);
         db_inago_delete(code.toString());
 
         return;

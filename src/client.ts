@@ -37,7 +37,6 @@ ws.on('open', () => {
 });
 
 ws.on('message', (message: string) => {
-  //  console.log(`Received message from server: ${ message }`);
   const json_obj = new JsonParseMain(message)
   const code = json_obj.getCode()
   const is_price_changed = counter.add(json_obj);
