@@ -29,13 +29,11 @@ export class AlgoSellSimpleMoving extends AlgoBase {
         const percentageDifference = (difference / previousValue) * 100;
 
         // 相対差が0.1%以上であるか判断する
-        return percentageDifference >= 0.1;
+        return percentageDifference >= 0.50;
     }
 
-    public go_algo() {
-        this.analysis_sell().then((result) => {
-            return result;
-        });
+    public async go_algo() {
+        return await this.analysis_sell();
     }
 
 

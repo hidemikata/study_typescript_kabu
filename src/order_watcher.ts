@@ -18,7 +18,7 @@ export class OrderWacher {
             console.log('time expire sell kabu:', code.toString());
             do_sell_kabu(code.toString(), sell_price)
 
-        }, 60000);
+        }, 600000000);
         const tiemrId = this.generateUniqueString(8);
         console.log('timer = ', tiemrId);
 

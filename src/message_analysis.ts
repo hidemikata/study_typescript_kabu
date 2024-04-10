@@ -8,7 +8,7 @@ import db_sell_kabu from "./db/db_sell_kabu.js";
 import db_search_buying_data from './db/db_search_buying_data.js';
 import { trade_table } from './db/db_init.js';
 import { OrderWacher } from './order_watcher.js';
-import { AlgoSellSimpleMoving } from "./algo_sell_simpleMoving.js";
+import { AlgoSellSimpleMoving } from "./algo_sell_simple_moving.js";
 
 
 export class MessageAnalysis {
@@ -65,8 +65,8 @@ export class MessageAnalysis {
 
         let sell_jadge: number | undefined;
         for (const algo of this.sell_algos) {
-            const ret = !!algo.go_algo();//booleanに変換
-            sell_jadge = (sell_jadge === undefined) ? ret ? 1 : 0 : sell_jadge & (ret ? 1 : 0);
+            const ret = !!(await algo.go_algo());//booleanに変換
+            sell_jadge = (sell_jadge === undefined) ? ret ? 1 : 0 : sell_jadge | (ret ? 1 : 0);//sellはまたはで評価
         }
 
         if (sell_jadge === 1) {
