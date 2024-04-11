@@ -2,6 +2,9 @@
 import { JsonParseMain } from "./json_parse_main.js";
 import { AlgoPrice } from "./algo_price.js";
 import { AlgoOrderNums } from "./algo_order_nums.js";
+import { AlgoPriceKeta } from "./algo_price_keta.js";
+
+import { AlgoSellOrderNums } from "./algo_sell_order_nums.js";
 import { AlgoBase } from "./algo_base.js";
 import db_buy_kabu from "./db/db_buy_kabu.js";
 import db_sell_kabu from "./db/db_sell_kabu.js";
@@ -24,11 +27,11 @@ export class MessageAnalysis {
         this.order_watcher = new OrderWacher();
 
         this.sell_algos = [new AlgoSellSimpleMoving(json)];
-
+        this.sell_algos.push(new AlgoSellOrderNums(json));
+        this.sell_algos.push(new AlgoPriceKeta(json));
     }
 
     public async start() {
-        const current_price = this.json.getCurrentPrice();
 
         const buying_data: trade_table[] | undefined = await db_search_buying_data(this.json.getCode());
 
