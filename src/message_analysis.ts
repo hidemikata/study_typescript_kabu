@@ -24,11 +24,11 @@ export class MessageAnalysis {
         this.json = json;
         this.buy_algos = [new AlgoPrice(json)];
         this.buy_algos.push(new AlgoOrderNums(json));
+        this.buy_algos.push(new AlgoPriceKeta(json));
         this.order_watcher = new OrderWacher();
 
         this.sell_algos = [new AlgoSellSimpleMoving(json)];
         this.sell_algos.push(new AlgoSellOrderNums(json));
-        this.sell_algos.push(new AlgoPriceKeta(json));
     }
 
     public async start() {

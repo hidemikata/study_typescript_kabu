@@ -11,7 +11,7 @@ export class AlgoSellOrderNums extends AlgoBase {
 
     public go_algo() {
         if (this.is_order_over()) {
-            console.log('keta is over none');
+            console.log('sell true:keta is over none');
             return true;
         }
         return false;

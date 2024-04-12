@@ -17,6 +17,7 @@ export class AlgoSellSimpleMoving extends AlgoBase {
         }
 
         if (this.shouldExecuteAction(buying_data[0].buy_price * 1.0, this.json.getCurrentPrice() * 1.0)) {
+            console.log('sell true: price is over')
             return true;
         }
 
