@@ -24,13 +24,20 @@ export class AlgoSellSimpleMoving extends AlgoBase {
         return false;
 
     }
-    private shouldExecuteAction(currentValue: number, previousValue: number): boolean {
+    private shouldExecuteAction(buy_price: number, current_price: number): boolean {
         // 相対差を計算する
-        const difference = Math.abs(currentValue - previousValue);
-        const percentageDifference = (difference / previousValue) * 100;
+        const diff_price = current_price - buy_price;
+        const difference = Math.abs(diff_price);
+        const percentageDifference = (difference / current_price) * 100;
 
         // 相対差が0.1%以上であるか判断する
-        return percentageDifference >= 0.50;
+        if (diff_price < 0) {
+            //損失
+            return percentageDifference >= 0.10;
+        } else {
+            //利益
+            return percentageDifference >= 0.50;
+        }
     }
 
     public async go_algo() {
