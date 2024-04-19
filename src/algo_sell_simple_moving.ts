@@ -16,7 +16,7 @@ export class AlgoSellSimpleMoving extends AlgoBase {
             return false;
         }
 
-        if (this.shouldExecuteAction(buying_data[0].buy_price * 1.0, this.json.getCurrentPrice() * 1.0)) {
+        if (this.shouldExecuteAction(buying_data[0].buy_price * 1.0, this.json.AskPrice() * 1.0)) {//currentpriceではなく売れる金額で計算
             console.log('sell true: price is over')
             return true;
         }
@@ -33,10 +33,10 @@ export class AlgoSellSimpleMoving extends AlgoBase {
         // 相対差が0.1%以上であるか判断する
         if (diff_price < 0) {
             //損失
-            return percentageDifference >= 0.10;
+            return percentageDifference >= 0.50;
         } else {
             //利益
-            return percentageDifference >= 0.50;
+            return percentageDifference >= 1.00;
         }
     }
 
