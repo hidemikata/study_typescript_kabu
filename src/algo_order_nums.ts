@@ -11,7 +11,6 @@ export class AlgoOrderNums extends AlgoBase {
 
     public go_algo() {
         if (this.is_order_over()) {
-            console.log('keta is over');
             return true;
         }
         return false;

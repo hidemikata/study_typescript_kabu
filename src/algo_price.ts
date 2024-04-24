@@ -8,8 +8,7 @@ export class AlgoPrice extends AlgoBase {
     }
 
     public go_algo() {
-        this.analysis_buy_board();
-        return true;
+        return this.analysis_buy_board();
     }
 
 

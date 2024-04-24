@@ -12,7 +12,9 @@ export class JsonParseMain {
     getCurrentPrice() {
         return this.parsed_json.CurrentPrice;
     }
-
+    getPreviousPrice() {
+        return this.parsed_json.PreviousClose;
+    }
     getCode() {
         return this.parsed_json.Symbol;
     }

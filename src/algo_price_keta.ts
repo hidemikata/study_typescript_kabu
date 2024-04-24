@@ -6,8 +6,7 @@ export class AlgoPriceKeta extends AlgoBase {
 
         const price_int = Math.trunc(parseFloat(this.json.getCurrentPrice()));
 
-        const price_length = price_int.toString().length;
-        console.log(parseFloat(this.json.getCurrentPrice()), ',', price_int, ',', price_length);
+        const price_length: number = price_int.toString().length;
         if (price_length < 5) {
             return true
         }
@@ -16,8 +15,7 @@ export class AlgoPriceKeta extends AlgoBase {
     }
 
     public go_algo() {
-        this.analysis_buy_board();
-        return true;
+        return this.analysis_buy_board();
     }
 
 
