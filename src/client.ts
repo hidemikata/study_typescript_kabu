@@ -7,6 +7,7 @@ import { InagoRader } from "./inago_rader.js";
 import db_initialize from './db/db_init.js';
 import { GetToken } from "./get_token.js";
 
+
 //実行方法
 //npx tsc -p .\tsconfig.json; node .\dist\client.js
 

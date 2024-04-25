@@ -2,12 +2,14 @@
 import { getBoard } from "./get_board.js";
 import { JsonParseMain } from "./json_parse_main.js";
 import do_sell_kabu from './db/db_sell_kabu.js';
+import { get_fix_time } from "./get_fix_time.js";
 
 export class OrderWacher {
 
     private map_of_order_wacher = new Map<string, NodeJS.Timeout>();
 
     public registOrderWatcherForFix(code: number): string {
+        const fix_second = get_fix_time();//とりあえず前場の終わり後場の終わりでタイマーをかける。
 
         const timer = setTimeout(async () => {
             const data: JsonParseMain | undefined = await getBoard(code);
@@ -18,7 +20,7 @@ export class OrderWacher {
             console.log('time expire sell kabu:', code.toString());
             do_sell_kabu(code.toString(), sell_price)
 
-        }, 600000000);//debug
+        }, fix_second * 1000);
         const tiemrId = this.generateUniqueString(8);
 
         this.map_of_order_wacher.set(tiemrId, timer);
