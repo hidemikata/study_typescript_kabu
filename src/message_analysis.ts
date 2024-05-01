@@ -5,9 +5,12 @@ import { AlgoOrderNums } from "./algo_order_nums.js";
 import { AlgoPriceKeta } from "./algo_price_keta.js";
 import { AlgoPreviousPrice } from "./algo_previous_price.js";
 import { AlgoBuyTime } from "./algo_buy_time.js";
+import { AnalAlgoOrderNums } from "./anal_algo_order_nums.js";
+import { AnalProcedureOrderNums } from "./anal_procedure_order_nums.js";
 
 //import { AlgoSellOrderNums } from "./algo_sell_order_nums.js";
 import { AlgoBase } from "./algo_base.js";
+import { AnalProcedureBase } from "./anal_procedure_base.js";
 import db_buy_kabu from "./db/db_buy_kabu.js";
 import db_sell_kabu from "./db/db_sell_kabu.js";
 import db_search_buying_data from './db/db_search_buying_data.js';
@@ -15,10 +18,15 @@ import { trade_table } from './db/db_init.js';
 import { OrderWacher } from './order_watcher.js';
 import { AlgoSellSimpleMoving } from "./algo_sell_simple_moving.js";
 
+interface AnalysisTrade {
+    algo: AlgoBase;
+    procedure: AnalProcedureBase;
+}
 
 export class MessageAnalysis {
     public json: JsonParseMain;
     private buy_algos: AlgoBase[];
+    private anal_algos: AnalysisTrade[];
     private sell_algos: AlgoBase[];
     private order_watcher: OrderWacher;
 
@@ -34,6 +42,12 @@ export class MessageAnalysis {
 
         this.sell_algos = [new AlgoSellSimpleMoving(json)];
         //this.sell_algos.push(new AlgoSellOrderNums(json));//とりあえずなし
+
+        const analysis_trade1: AnalysisTrade = {
+            algo: new AnalAlgoOrderNums(json),
+            procedure: new AnalProcedureOrderNums(json)
+        }
+        this.anal_algos = [analysis_trade1];
     }
 
     public async start() {
@@ -44,11 +58,22 @@ export class MessageAnalysis {
             console.error('faild get buying data.');
             return false;
         }
+        this.analysis();
 
         if (buying_data.length === 0) {
             this.buy();
         } else {
             this.sell();
+        }
+
+    }
+    private async analysis() {
+        for (const algo_trade of this.anal_algos) {
+            const algo = algo_trade.algo;
+            const ret = algo.go_algo();
+            if (ret === true) {
+                algo_trade.procedure.go_anal_procedure();
+            }
         }
 
     }
