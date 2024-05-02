@@ -1,11 +1,11 @@
 import { AlgoBase } from "./algo_base.js";
-import { db_search_ita_keta_more, db_insert_ita_keta_more } from './db/db_ita_keta_more.js';
+import { db_search_ita_keta_more, db_insert_ita_keta_more, db_delete_ita_keta_more } from './db/db_ita_keta_more.js';
 import { ita_keta_more } from './db/db_init.js';
 
 export class AnalAlgoOrderNums extends AlgoBase {
 
     private is_order_over(): boolean {
-        if (this.json.getBuyQtyKeta() > this.json.getSellQtyKeta()) {
+        if (this.json.getBuyQtyKeta() < this.json.getSellQtyKeta()) {//売り板のほうがでかい場合。
             return true;
         }
         return false;
@@ -23,26 +23,31 @@ export class AnalAlgoOrderNums extends AlgoBase {
             return false;
         }
 
-        return false;
+        return true;
 
     }
 
-    public go_algo() {
-        let exists: boolean = false;
-        this.is_already_exist().then((result) => {
-            if (result) {
-                console.log('exist ita_keta_more');
-                exists = true;
-            }
-        });
-        let order_over: boolean = false;
-        if (this.is_order_over()) {
-            order_over = true;
-        }
+    private set_ita_keta_timer() {
+        const second = 60;
+        const timer = setTimeout(async () => {
+            db_delete_ita_keta_more(this.json.getCode())
+        }, second * 1000);
+        return
+    }
+
+    public async go_algo() {
+        let exists: boolean = await this.is_already_exist();
+
+        let order_over: boolean = this.is_order_over();
 
         if (order_over === true && exists === false) {
-            db_insert_ita_keta_more(this.json.getCode());
-            //ここでタイマー起動。起動してita_keta_moreから消すというのをやる。
+            let ret: boolean = await db_insert_ita_keta_more(this.json.getCode());
+            if (ret) {
+                this.set_ita_keta_timer();
+            } else {
+                return false;
+            }
+
             return true;
         } else if (exists) {
             return true

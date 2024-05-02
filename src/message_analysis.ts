@@ -70,7 +70,7 @@ export class MessageAnalysis {
     private async analysis() {
         for (const algo_trade of this.anal_algos) {
             const algo = algo_trade.algo;
-            const ret = algo.go_algo();
+            const ret = await algo.go_algo();
             if (ret === true) {
                 algo_trade.procedure.go_anal_procedure();
             }

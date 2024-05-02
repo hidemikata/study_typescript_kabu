@@ -20,15 +20,11 @@ export class AnalProcedureOrderNums extends AnalProcedureBase {
         return ita_keta_data[0].id;
     }
 
-    public go_anal_procedure() {
-        let id = 0;
+    public async go_anal_procedure() {
+        let ita_keta_id = await this.get_id();
 
-        this.get_id().then((result) => {
-            id = result
-        });
-
-        db_insert_ita_keta_price_data(id, this.json.getCode(), this.json.getCurrentPrice()).then((result) => {
-            if (result) {
+        db_insert_ita_keta_price_data(ita_keta_id, this.json.getCode(), this.json.getCurrentPrice()).then((result) => {
+            if (result === false) {
                 console.error('anal procedure insert NG.');
                 return;
             }
