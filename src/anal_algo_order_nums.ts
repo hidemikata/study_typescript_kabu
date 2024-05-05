@@ -36,6 +36,7 @@ export class AnalAlgoOrderNums extends AlgoBase {
     }
 
     public async go_algo() {
+        global.db.run('BEGIN TRANSACTION');
         let exists: boolean = await this.is_already_exist();
 
         let order_over: boolean = this.is_order_over();
@@ -43,8 +44,10 @@ export class AnalAlgoOrderNums extends AlgoBase {
         if (order_over === true && exists === false) {
             let ret: boolean = await db_insert_ita_keta_more(this.json.getCode());
             if (ret) {
+                global.db.run('COMMIT');
                 this.set_ita_keta_timer();
             } else {
+                global.db.run('ROLLBACK');
                 return false;
             }
 
