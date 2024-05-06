@@ -59,7 +59,7 @@ export default function db_initialize() {
         });
     });
 
-    global.db.run(`drop table ita_keta_more;`, (err) => {
+    global.db.run(`delete from ita_keta_more;`, (err) => {
         global.db.run(`CREATE TABLE ita_keta_more (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         stock_code TEXT NOT NULL
